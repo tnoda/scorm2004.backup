@@ -1,10 +1,18 @@
-# Configure Rails Environment
-ENV["RAILS_ENV"] = "test"
+require 'rubygems'
+require 'spork'
+#uncomment the following line to use spork with the debugger
+#require 'spork/ext/ruby-debug'
 
-require File.expand_path("../dummy/config/environment.rb",  __FILE__)
-require "rails/test_help"
+Spork.prefork do
+  ENV["RAILS_ENV"] = "test"
+  require File.expand_path("../dummy/config/environment.rb",  __FILE__)
+  require "rails/test_help"
+  Rails.backtrace_cleaner.remove_silencers!
 
-Rails.backtrace_cleaner.remove_silencers!
+  require 'factory_girl_rails'
+  ActiveSupport::TestCase.class_eval { include FactoryGirl::Syntax::Methods }
+end
 
-# Load support files
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
+Spork.each_run do
+  Dir["#{File.dirname(__FILE__)}/../app/models/**/*.rb"].each { |file| load file }
+end

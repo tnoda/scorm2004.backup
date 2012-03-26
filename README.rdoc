@@ -1,0 +1,3 @@
+= Scorm2004
+
+This project rocks and uses MIT-LICENSE.

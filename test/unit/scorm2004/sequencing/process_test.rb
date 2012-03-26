@@ -20,6 +20,14 @@ module Scorm2004
         assert_equal 'bar', foo.bar
         assert_equal 'baz', foo.baz
       end
+
+      test 'the exception private method raises exception' do
+        assert_raise Scorm2004::Sequencing::Exception do
+          FooProcess.new(:dummy).instance_eval do
+            exception('dummy code')
+          end
+        end
+      end
     end
   end
 end

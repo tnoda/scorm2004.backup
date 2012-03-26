@@ -19,6 +19,12 @@ module Scorm2004
       def self.run(*args)
         self.new(*args).run
       end
+
+      private
+
+      def exception(code)
+        raise Exception.new(code)        
+      end
     end
   end
 end
